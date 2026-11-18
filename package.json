@@ -15,6 +15,7 @@
     "dist:linux": "electron-builder --linux",
     "dist:dir": "electron-builder --dir",
     "dist:mac": "npm run dist:mac:arm64",
+    "dist:mac:signed": "electron-builder --mac zip --arm64 --x64",
     "dist:mac:arm64": "electron-packager . DUSTBOWL --platform=darwin --arch=arm64 --out=release/mac-arm64 --overwrite --asar --app-bundle-id=com.dustbowl.airsoft --app-version=1.0.0 --build-version=1.0.0 --app-category-type=public.app-category.games --extend-info=build/mac-info.plist --ignore=release --ignore=screenshots --ignore=scripts",
     "dist:mac:x64": "electron-packager . DUSTBOWL --platform=darwin --arch=x64 --out=release/mac-x64 --overwrite --asar --app-bundle-id=com.dustbowl.airsoft --app-version=1.0.0 --build-version=1.0.0 --app-category-type=public.app-category.games --extend-info=build/mac-info.plist --ignore=release --ignore=screenshots --ignore=scripts"
   },
@@ -46,9 +47,15 @@
     },
     "mac": {
       "target": [
-        "dmg"
+        "zip"
       ],
-      "category": "public.app-category.games"
+      "category": "public.app-category.games",
+      "artifactName": "${productName}-${version}-mac-${arch}.${ext}",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist",
+      "notarize": true
     }
   },
   "devDependencies": {
