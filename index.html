@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DUSTBOWL — Airsoft Skirmish</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app">
+    <canvas id="game"></canvas>
+    <div id="hurt"></div>
+    <div id="vignette"></div>
+
+    <div id="hud">
+      <div class="topbar">
+        <div class="score"><span class="tag blue">BLUE</span><span class="num blue" id="blueScore">0</span></div>
+        <div class="timer" id="timer">3:30</div>
+        <div class="score"><span class="num tan" id="tanScore">0</span><span class="tag tan">TAN</span></div>
+      </div>
+
+      <div class="killfeed" id="killfeed"></div>
+
+      <div class="vitals">
+        <div class="label"><span>VITALS</span><span id="statusText">READY</span></div>
+        <div class="bar health"><i id="healthFill"></i></div>
+        <div class="bar stamina"><i id="staminaFill"></i></div>
+      </div>
+
+      <div class="ammo">
+        <div class="weapon" id="weaponName">M4 CARBINE · 6 MM</div>
+        <div class="counts"><span id="magCount">30</span><span class="reserve">/ <b id="reserveCount">150</b></span></div>
+        <div class="reloadbar"><i id="reloadFill"></i></div>
+      </div>
+
+      <div class="centertext" id="centerText"></div>
+      <div class="toast" id="toast"></div>
+      <div class="hint" id="hint">WASD MOVE · MOUSE AIM · HOLD TO FIRE · R RELOAD · SHIFT SPRINT</div>
+    </div>
+
+    <div class="overlay" id="startScreen">
+      <div class="panel">
+        <div class="eyebrow">Airsoft skirmish · 6 mm · honor system</div>
+        <h1>DUSTBOWL</h1>
+        <p class="lede">The old quarry field. Three a side, first team to 25 eliminations takes it. Call your hits, keep your mag topped, and use the cover.</p>
+        <div class="keys">
+          <div class="keyrow"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> MOVE</div>
+          <div class="keyrow"><kbd>MOUSE</kbd> AIM · HOLD TO FIRE</div>
+          <div class="keyrow"><kbd>R</kbd> RELOAD</div>
+          <div class="keyrow"><kbd>SHIFT</kbd> SPRINT</div>
+          <div class="keyrow"><kbd>ESC</kbd> PAUSE</div>
+          <div class="keyrow"><kbd>M</kbd> MUTE</div>
+        </div>
+        <div class="actions">
+          <button class="btn" id="deployBtn">DEPLOY</button>
+          <button class="btn ghost" id="liveBtn">GO LIVE ON LAN</button>
+          <span class="meta">BLUE 3 · TAN 3 · FIRST TO 25</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="overlay hidden" id="endScreen">
+      <div class="panel">
+        <div class="eyebrow">Match complete</div>
+        <h2 id="endTitle">VICTORY</h2>
+        <p class="lede" id="endSub"></p>
+        <div class="final" id="endScore"></div>
+        <div class="actions">
+          <button class="btn" id="restartBtn">REDEPLOY</button>
+          <span class="meta">OR PRESS ENTER</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="overlay hidden" id="pauseScreen">
+      <div class="panel">
+        <div class="eyebrow">Holding the line</div>
+        <h2 id="pauseTitle">PAUSED</h2>
+        <p class="lede">The field waits. Take a breath, check your mag, then get back in the fight.</p>
+        <div class="actions">
+          <button class="btn" id="resumeBtn">RESUME</button>
+          <span class="meta">ESC TO RESUME · M TO MUTE</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="overlay hidden" id="livePanel">
+      <div class="panel livestream">
+        <div class="eyebrow">Lan broadcast · same network</div>
+        <h2 class="livehead"><span class="dot" id="liveDot"></span>DUSTBOWL LIVE</h2>
+        <p class="lede" id="liveStatus">Not broadcasting. Start a session and anyone on your network can open the field in a browser.</p>
+        <div class="live-share" id="liveShare">
+          <img class="live-qr" id="liveQr" alt="QR code for the LAN game link" />
+          <div class="live-links">
+            <div class="live-primary" id="liveUrl">—</div>
+            <button class="btn ghost small" id="liveCopy">COPY LINK</button>
+            <div class="live-alt" id="liveAlt"></div>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="btn" id="liveStart">START BROADCAST</button>
+          <button class="btn ghost" id="liveStop">STOP</button>
+          <button class="btn ghost" id="liveClose">BACK</button>
+          <span class="meta" id="liveMeta">LAN only — nothing leaves your network</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>

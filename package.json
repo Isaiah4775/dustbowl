@@ -1,0 +1,62 @@
+{
+  "name": "dustbowl-airsoft",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "DUSTBOWL — a top-down airsoft skirmish game.",
+  "author": "DUSTBOWL",
+  "main": "electron/main.js",
+  "scripts": {
+    "start": "electron .",
+    "app": "electron .",
+    "web": "node server.js",
+    "dev": "node server.js",
+    "dist": "electron-builder",
+    "dist:linux": "electron-builder --linux",
+    "dist:dir": "electron-builder --dir",
+    "dist:mac": "npm run dist:mac:arm64",
+    "dist:mac:arm64": "electron-packager . DUSTBOWL --platform=darwin --arch=arm64 --out=release/mac-arm64 --overwrite --asar --app-bundle-id=com.dustbowl.airsoft --app-version=1.0.0 --build-version=1.0.0 --app-category-type=public.app-category.games --extend-info=build/mac-info.plist --ignore=release --ignore=screenshots --ignore=scripts",
+    "dist:mac:x64": "electron-packager . DUSTBOWL --platform=darwin --arch=x64 --out=release/mac-x64 --overwrite --asar --app-bundle-id=com.dustbowl.airsoft --app-version=1.0.0 --build-version=1.0.0 --app-category-type=public.app-category.games --extend-info=build/mac-info.plist --ignore=release --ignore=screenshots --ignore=scripts"
+  },
+  "build": {
+    "appId": "com.dustbowl.airsoft",
+    "productName": "DUSTBOWL",
+    "asar": true,
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "index.html",
+      "styles.css",
+      "src/**/*",
+      "lib/**/*",
+      "electron/**/*",
+      "package.json"
+    ],
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Game"
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "category": "public.app-category.games"
+    }
+  },
+  "devDependencies": {
+    "@electron/packager": "^20.3.0",
+    "electron": "^45.3.4",
+    "electron-builder": "^26.18.0"
+  },
+  "dependencies": {
+    "qrcode": "^1.5.4"
+  }
+}
