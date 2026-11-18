@@ -27,19 +27,23 @@ chmod +x DUSTBOWL-1.0.0.AppImage
 
 If it fails to start because of sandboxing, launch it with `--no-sandbox`.
 
-### macOS — the build is unsigned, so expect a warning
+### macOS — the build is unsigned, so Gatekeeper will block it
 
-These builds are not signed with an Apple Developer certificate, so Gatekeeper will block the first launch with a message like *"DUSTBOWL.app is damaged"* or *"Apple cannot check it for malicious software"*. This is expected. To open it anyway:
+These builds are not signed with an Apple Developer certificate or notarized, so macOS will refuse the first launch with a message like *"DUSTBOWL.app is damaged and can't be opened"* or *"Apple cannot check it for malicious software"*. That is Gatekeeper reacting to the missing signature, not a broken download, and right-click → Open is often **not** enough for a completely unsigned app. Clear the quarantine flag instead, which is the reliable fix:
 
 1. Unzip the download to get `DUSTBOWL.app`, then drag it into **Applications**.
-2. **Right-click (or Control-click) DUSTBOWL.app → Open**, then click **Open** in the dialog. Double-clicking won't work the first time — the right-click is what bypasses Gatekeeper.
-3. If macOS still refuses, clear the quarantine flag in Terminal and open the app again:
+2. Open **Terminal** and run:
 
    ```bash
    xattr -dr com.apple.quarantine /Applications/DUSTBOWL.app
    ```
+3. Open DUSTBOWL normally from Applications or Launchpad.
 
-You only need to do this once. After the first successful launch, the app opens normally.
+If macOS still complains, try **System Settings → Privacy & Security**, scroll down to the DUSTBOWL line, and click **Open Anyway**. You only need to do this once — after the first successful launch the app opens normally.
+
+If you'd rather avoid the Terminal, use the browser version instead — `node server.js` in this repo, then open http://localhost:3000.
+
+> Signing and notarization are wired up in `.github/workflows/macos-signed.yml`; once a Developer ID certificate is added to the repository secrets, that workflow replaces these zips with signed, notarized builds that open with no warning at all.
 
 ## Host a LAN match
 
